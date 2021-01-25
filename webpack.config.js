@@ -3,6 +3,8 @@ const miniCss = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+const webpack = require('webpack');
+
 module.exports = {
    entry: './src/index.js',
    output: {
@@ -34,6 +36,15 @@ module.exports = {
          }
       ]
    },
+   mode: 'development',
+   devServer: {
+       historyApiFallback: true,
+       contentBase: path.resolve(__dirname, './dist'),
+       open: true,
+       compress: true,
+       hot: true,
+       port: 8080,
+   },
    plugins: [
       new miniCss({
          filename: 'style.css',
@@ -44,5 +55,6 @@ module.exports = {
          filename: 'index.html', // название выходного файла
      }),
      new CleanWebpackPlugin(),
+     new webpack.HotModuleReplacementPlugin(),
    ]
 };

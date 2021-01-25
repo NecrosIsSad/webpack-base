@@ -1,4 +1,6 @@
-$font-size: 1rem;
+@import "./_normalize.scss";
+
+$font-size: 3rem;
 $font-color: purple;
 
 h1 {
