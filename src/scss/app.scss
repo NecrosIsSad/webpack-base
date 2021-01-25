@@ -1,3 +1,16 @@
+$font-size: 1rem;
+$font-color: purple;
+
 h1 {
-    color: red;
+    font-family: 'Roboto-Regular';
+    font-size: $font-size;
+    color: $font-color;
 }
+
+@font-face {
+    font-family: 'Roboto-Regular';
+    src: url('../fonts/Roboto-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
