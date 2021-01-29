@@ -1,26 +1,51 @@
 const path = require('path');
-const miniCss = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
 
 const webpack = require('webpack');
+const copyWebpackPlugin = require('copy-webpack-plugin');
+
+const PATH_SRC = path.join(__dirname, './src')
+const PATH_BUILD = path.join(__dirname, './build')
+const PATH_ASSETS = 'assets/'
 
 module.exports = {
    entry: './src/index.js',
    output: {
       filename: 'bundle.js',
-      path: path.resolve(__dirname, 'dist')
+      path: path.resolve(__dirname, 'build')
    },
    module: {
       rules: [
          {
-            test:/\.(s*)css$/,
+            test: /\.scss$/,
             use: [
-               miniCss.loader,
-               'css-loader',
-               'sass-loader',
+                "style-loader",
+                MiniCssExtractPlugin.loader,
+                {
+                    loader: "css-loader",
+                    options: {
+                        sourceMap: true
+                    }
+                },
+                {
+                    loader: "sass-loader",
+                    options: {
+                        sourceMap: true
+                    }
+                },
+                {
+                  loader: "postcss-loader",
+                  options: {
+                      config: {
+                          path: `./postcss.config.js`
+                      }
+                  }
+              },
             ]
-         },
+        },
          {
             test: /\.js$/,
             exclude: /node_modules/,
@@ -46,9 +71,6 @@ module.exports = {
        port: 8080,
    },
    plugins: [
-      new miniCss({
-         filename: 'style.css',
-      }),
       new HtmlWebpackPlugin({
          title: 'webpack base',
          template: path.resolve(__dirname, './src/template.html'), // шаблон
@@ -56,5 +78,21 @@ module.exports = {
      }),
      new CleanWebpackPlugin(),
      new webpack.HotModuleReplacementPlugin(),
+     new copyWebpackPlugin( 
+        { 
+        patterns: [
+            {
+               from: `${PATH_SRC}/${PATH_ASSETS}/images`,
+               to: `images`
+            },
+            {
+               from: `${PATH_SRC}/${PATH_ASSETS}/fonts`,
+               to: `fonts`
+            },
+        ]
+      }),
+      new MiniCssExtractPlugin({
+         filename: `css/[name].[contenthash].css`
+     })
    ]
 };
