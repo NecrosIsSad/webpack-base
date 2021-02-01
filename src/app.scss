@@ -1,12 +1,23 @@
 @import "./assets/scss/_normalize.scss";
 
-$font-size: 3rem;
-$font-color: purple;
+body {
+    background-color: #fce4f2;
+}
 
-h1 {
-    font-family: 'Roboto-Regular';
-    font-size: $font-size;
-    color: $font-color;
+.header {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   font-family: 'Roboto-Regular';
+   font-size: 18px;
+   color: rgb(116, 125, 255);
+}
+
+.hello-inner {
+    background-image: url(./assets/images/hello.png);
+    height: 100px;
+    width: 160px;
+    object-fit: contain;
 }
 
 @font-face {

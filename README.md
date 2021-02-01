@@ -1,5 +1,8 @@
 # webpack-base
 
+## install
+    npm install
+
 ## run project 
     npm run start
 
